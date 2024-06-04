@@ -4,13 +4,13 @@ const passport = require('passport'); // Importa Passport para la autenticación
 const router = express.Router(); // Crea un enrutador de Express
 
 // Maneja las solicitudes GET para obtener las órdenes del usuario autenticado
-router.get('/my-orders',
+router.get('/dates',
   passport.authenticate('jwt', { session: false }), // Autentica la solicitud utilizando JWT y deshabilita el uso de sesiones
   async (req, res, next) => {
     try {
       const user = req.user; // Obtiene el usuario autenticado desde el objeto de solicitud
-      const orders = await service.findByUser(user.sub); // Obtiene las órdenes del usuario utilizando el servicio
-      res.json(orders); // Envía la respuesta con las órdenes del usuario en formato JSON
+      const dates = await service.findByUser(user.sub); // Obtiene las órdenes del usuario utilizando el servicio
+      res.json(dates); // Envía la respuesta con las órdenes del usuario en formato JSON
     } catch (error) {
       next(error); // Pasa cualquier error al siguiente middleware de manejo de errores
     }

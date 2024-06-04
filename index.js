@@ -10,6 +10,9 @@ const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('
 // Importa la función checkApiKey desde el archivo auth.handler.js ubicado en la carpeta middlewares
 const { checkApiKey } = require('./middlewares/auth.handler');
 
+const { swaggerDocs } = require('./routes/swagger');
+
+
 // Crea una instancia de la aplicación express
 const app = express();
 
@@ -39,4 +42,5 @@ app.use(errorHandler);
 // Inicia el servidor y hace que escuche las solicitudes en el puerto especificado
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
+  swaggerDocs(app, port);
 });
