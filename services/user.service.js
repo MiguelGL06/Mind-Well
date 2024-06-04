@@ -1,4 +1,6 @@
 // Importa las bibliotecas necesarias
+// Importa las bibliotecas necesarias
+// Importa las bibliotecas necesarias
 const boom = require('@hapi/boom'); // Para manejar errores HTTP
 const bcrypt = require('bcrypt'); // Para el hash de contraseñas
 
@@ -15,16 +17,23 @@ class UserService {
     const hash = await bcrypt.hash(data.password, 10);
 
     // Crea un nuevo usuario en la base de datos con la contraseña hasheada
-    const newUser = await models.User.create({
-      ...data,
-      password: hash
-    });
+    try {
+      const newUser = await models.User.create({
+        ...data,
+        password: hash
+      });
+      // Elimina la contraseña del objeto de usuario para no enviarla en la respuesta
+      delete newUser.dataValues.password;
 
-    // Elimina la contraseña del objeto de usuario para no enviarla en la respuesta
-    delete newUser.dataValues.password;
+      // Retorna el nuevo usuario creado
+      return newUser;
+    } catch (error) {
+      console.log("Error")
+      console.log(error)
+    }
 
-    // Retorna el nuevo usuario creado
-    return newUser;
+
+
   }
 
   // Método para buscar todos los usuarios en la base de datos
